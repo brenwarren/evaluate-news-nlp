@@ -59,19 +59,10 @@ app.post('/analyze-url', async (req, res) => {
         }
 
         // Step 2: Connect to the AWS NLP API
-        // --- Learner Task: Add the code to send the extracted text to the AWS NLP API below ---
-        // Use `axios.post` to send a POST request to the API.
-        // The endpoint URL is: https://kooye7u703.execute-api.us-east-1.amazonaws.com/NLPAnalyzer
-        // Send the `text` as part of the request body.
-
-        /*
-        Example Code:
+        console.log(`Sending text to AWS NLP API: ${text}`);
         const response = await axios.post('https://kooye7u703.execute-api.us-east-1.amazonaws.com/NLPAnalyzer', { text });
+        console.log('Received response from AWS NLP API:', response.data);
         return res.json(response.data); // Send the NLP results back to the client
-        */
-
-        // Placeholder response for learners to complete
-        return res.json({ message: 'NLP analysis result will be here. Complete the API call above!' });
     } catch (error) {
         console.error('Error during URL processing or API request:', error.message);
         return res.status(500).json({ error: 'Failed to analyze the URL' });
