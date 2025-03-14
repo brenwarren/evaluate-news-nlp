@@ -5,8 +5,12 @@
 // const serverURL = 'https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api'
 const serverURL = 'http://localhost:8000/analyze-url';
 
-const form = document.getElementById('urlForm');
-form.addEventListener('submit', handleSubmit);
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('urlForm');
+    if (form) {
+        form.addEventListener('submit', handleSubmit);
+    }
+});
 
 function isValidURL(string) {
     try {
@@ -42,10 +46,33 @@ async function handleSubmit(event) {
         const data = await response.json();
         // Handle the response data (e.g., display the analysis results)
         console.log(data);
-        document.getElementById('results').innerText = JSON.stringify(data, null, 2);
+        displayResults(data);
     } catch (error) {
         console.error('Error:', error);
     }
+}
+
+// Function to display the results in a formatted way
+function displayResults(data) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
+
+    if (data.error) {
+        resultsDiv.innerText = `Error: ${data.error}`;
+        return;
+    }
+
+    const sentiment = data.sentiment || 'Unknown';
+    const textPreview = data.textPreview || 'No text preview available';
+
+    const sentimentElement = document.createElement('p');
+    sentimentElement.innerHTML = `<strong>Sentiment:</strong> ${sentiment}`;
+
+    const textPreviewElement = document.createElement('p');
+    textPreviewElement.innerHTML = `<strong>Input Text Preview:</strong> ${textPreview}`;
+
+    resultsDiv.appendChild(sentimentElement);
+    resultsDiv.appendChild(textPreviewElement);
 }
 
 // Export the handleSubmit function
